@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор компенсации за задержку зарплаты 2025 | ТК РФ ст.236</title>
+    <meta name="description" content="Бесплатный онлайн калькулятор расчета процентов (компенсации) за задержку заработной платы по ст. 236 ТК РФ. Актуальная ставка ЦБ 2025 года.">
+    <meta name="keywords" content="компенсация за задержку зарплаты, калькулятор, ст 236, ставка рефинансирования">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            max-width: 550px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.01);
+        }
+        .header {
+            background: #1e3c72;
+            color: white;
+            padding: 24px 28px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 8px 0 0;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+        .content {
+            padding: 28px;
+        }
+        .input-group {
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e2a3a;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid #ccd7e6;
+            border-radius: 16px;
+            transition: 0.2s;
+            background: #fff;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.2);
+        }
+        .hint {
+            font-size: 0.75rem;
+            color: #5c6f87;
+            margin-top: 5px;
+        }
+        .result {
+            background: #eef2f9;
+            border-radius: 24px;
+            padding: 20px;
+            margin: 28px 0 20px;
+            text-align: center;
+        }
+        .result-amount {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #1e3c72;
+            margin: 10px 0 5px;
+            word-break: break-word;
+        }
+        .result-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #2c3e66;
+        }
+        .legal-note {
+            font-size: 0.7rem;
+            color: #5f7f9e;
+            text-align: center;
+            border-top: 1px solid #e0e8f0;
+            padding-top: 18px;
+            margin-top: 10px;
+        }
+        button {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+        button:hover {
+            background: #0f2b4f;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 500px) {
+            .content {
+                padding: 20px;
+            }
+            .result-amount {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="header">
+        <h1>📅 Компенсация за задержку зарплаты</h1>
+        <p>По статье 236 Трудового кодекса РФ</p>
+    </div>
+    <div class="content">
+        <div class="input-group">
+            <label>💰 Сумма задолженности (₽)</label>
+            <input type="number" id="debt" value="50000" step="1000" placeholder="Например, 50000">
+            <div class="hint">Укажите сумму, которую работодатель не выплатил вовремя</div>
+        </div>
+        <div class="input-group">
+            <label>📅 Дата начала задержки</label>
+            <input type="date" id="startDate">
+            <div class="hint">День, следующий за установленным сроком выплаты</div>
+        </div>
+        <div class="input-group">
+            <label>📅 Дата погашения (сегодня или фактическая)</label>
+            <input type="date" id="endDate">
+            <div class="hint">Если долг ещё не выплачен — поставьте сегодняшнюю дату</div>
+        </div>
+        <div class="input-group">
+            <label>🏦 Ключевая ставка ЦБ (% годовых)</label>
+            <select id="rate">
+                <option value="21">21% — актуальная с 28.10.2024</option>
+                <option value="19">19% (сентябрь 2024)</option>
+                <option value="18">18% (июль-август 2024)</option>
+                <option value="16">16% (декабрь 2023)</option>
+            </select>
+            <div class="hint">По умолчанию 1/150 ставки за каждый день просрочки</div>
+        </div>
+        <button id="calcBtn">Рассчитать компенсацию ⚡</button>
+        <div class="result" id="resultBlock">
+            <div class="result-label">Сумма компенсации за задержку</div>
+            <div class="result-amount" id="compAmount">0 ₽</div>
+            <div class="result-label" id="daysLabel">Количество дней просрочки: 0</div>
+        </div>
+        <div class="legal-note">
+            🧾 Компенсация = (сумма долга) × (ставка / 100 / 300) × 2 × дни просрочки.<br>
+            Согласно ст. 236 ТК РФ, работодатель обязан выплатить не ниже 1/150 ключевой ставки.
+        </div>
+    </div>
+</div>
+
+<script>
+    // Устанавливаем сегодняшнюю дату в поля по умолчанию
+    const today = new Date().toISOString().split('T')[0];
+    const startDefault = new Date();
+    startDefault.setDate(startDefault.getDate() - 45); // пример: задержка 45 дней назад
+    document.getElementById('startDate').value = startDefault.toISOString().split('T')[0];
+    document.getElementById('endDate').value = today;
+
+    function calculate() {
+        const debt = parseFloat(document.getElementById('debt').value);
+        let start = document.getElementById('startDate').value;
+        let end = document.getElementById('endDate').value;
+        const ratePercent = parseFloat(document.getElementById('rate').value);
+
+        if (isNaN(debt) || debt <= 0) {
+            document.getElementById('compAmount').innerText = '❌ Введите корректную сумму';
+            document.getElementById('daysLabel').innerText = 'Количество дней: —';
+            return;
+        }
+        if (!start || !end) {
+            document.getElementById('compAmount').innerText = '❌ Выберите даты';
+            return;
+        }
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+        if (startDate > endDate) {
+            document.getElementById('compAmount').innerText = '❌ Дата начала не может быть позже даты окончания';
+            return;
+        }
+        const diffTime = Math.abs(endDate - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if (diffDays === 0) {
+            document.getElementById('compAmount').innerText = '0 ₽';
+            document.getElementById('daysLabel').innerText = 'Количество дней просрочки: 0';
+            return;
+        }
+        // Формула: (debt * (rate/100) / 300) * 2 * diffDays
+        const rateDecimal = ratePercent / 100;
+        const compensation = (debt * rateDecimal / 300) * 2 * diffDays;
+        const formatted = compensation.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById('compAmount').innerHTML = `${formatted} ₽`;
+        document.getElementById('daysLabel').innerHTML = `📆 Количество дней просрочки: ${diffDays}`;
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', calculate);
+    // Автоматический расчёт при изменении полей
+    const inputs = ['debt', 'startDate', 'endDate', 'rate'];
+    inputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', calculate);
+    });
+    window.addEventListener('load', calculate);
+</script>
+</body>
+</html>
